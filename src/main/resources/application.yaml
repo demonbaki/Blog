@@ -1,0 +1,67 @@
+server:
+  port: 8080
+spring:
+  application:
+    name:myblog
+
+  data:
+    jpa:
+      repositories:
+        # 'bootstrap-mode' valori ammessi:
+        #   - DEFAULT -> I repositories vengono inizializzati all'avvio dell'applicazione
+        #   - DEFERRED -> I repositories vengono inizializzati all'avvio dell'applicazione ma in modo asincrono
+        #   - LAZY -> I repositories vengono inizializzati nel momento in cui vengono richiamati (velocizza l'avvio dell'applicazione ma aumenta i tempi di latenza alla prima chiamata)
+        bootstrap-mode: DEFAULT
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/Blogdemo?createDatabaseIfNotExist=true&autoReconnect=true&useSLL=false&useLegacyDatetimeCode=false
+    username: root
+    password: rootroot
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQLDialect
+        '[format_sql]': true
+        jdbc:
+        '[time_zone]': Europe/Rome
+        generate_statistics: false
+    show-sql: true
+  sql:
+    init:
+
+      #never: NON viene eseuite le istruzioni sql nel file data.sql sotto la cartella resources
+      #always: vengono SEMPRE eseguite le istruizioni  sql presenti nel file data.sql sotto la cartella resorces all'avvio dell'app
+      mode: never
+
+
+      #LOGGING LEVEL
+logging:
+  level:
+    it:
+      cgmconsulting: debug
+      org:
+        hibernate:
+          type:
+            descriptor:
+              sql:
+                BasicBinder: trace
+
+
+app:
+  mail:
+    sender: francecsodemontiss@gmail.com
+    apiKey: ${MAIL_GUN_API_KEY}
+    domain: ${MAIL_GUN_DOMAIN}
+  jwtSecret: ThisIsTheSecretK3y!
+  jwtExpirationInSeconds: 36000
+  cors.allowedOrigins: \*
+  post.image.path: /User/Public/myblog/images/
+  post.image.extensions: jpg,jpeg,png,gif
+  post.image.size: 30720
+  post.image.width: 600
+  post.image.height: 300
+
+
